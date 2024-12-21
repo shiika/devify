@@ -1,0 +1,36 @@
+<div class="relative">
+    <img src="../../../assets/images/Background pattern.svg" alt="" class="absolute top-0 left-0 -z-10">
+    <div class="grid grid-cols-1 md:grid-cols-3 md:gap-x-8 md:gap-y-12 gap-y-8 md:px-[112px] px-4 md:py-24 py-5 relative z-10">
+        <!-- Grid items go here -->
+         <ng-container *ngIf="!loaders['articles']; else loadingArticles">
+            <ng-container *ngIf="articles?.length > 0; else emptyState">
+                <div *ngFor="let article of articles">
+                    <app-article-card class="block h-full" [article]="article"></app-article-card>
+                </div>
+            </ng-container>
+         </ng-container>
+         <ng-template #loadingArticles>
+                <ngx-skeleton-loader [theme]="{ height: '400px', width: '100%' }"></ngx-skeleton-loader>
+                <ngx-skeleton-loader [theme]="{ height: '400px', width: '100%' }"></ngx-skeleton-loader>
+                <ngx-skeleton-loader [theme]="{ height: '400px', width: '100%' }"></ngx-skeleton-loader>
+            </ng-template>
+            <ng-container *ngIf="loaders['more']">
+                <ngx-skeleton-loader [theme]="{ height: '400px', width: '100%' }"></ngx-skeleton-loader>
+                <ngx-skeleton-loader [theme]="{ height: '400px', width: '100%' }"></ngx-skeleton-loader>
+                <ngx-skeleton-loader [theme]="{ height: '400px', width: '100%' }"></ngx-skeleton-loader>
+            </ng-container>
+    </div>
+    <ng-template #emptyState>
+        <app-empty-state></app-empty-state>
+    </ng-template>
+    <div class="mx-4 mt-12 md:mt-0">
+        <button type="button" (click)="loadMore()" class="rounded-lg border border-[#F9F5FF] shadow-sm bg-[#F9F5FF] text-devify-primary md:w-[150px] w-full flex justify-center items-center gap-2 py-3 mb-24 px-5 md:mx-auto cursor-pointer">
+            <img src="../../../assets/icons/arrow-down.svg" alt="arrow down" width="20" height="20">
+            <span *ngIf="!loaders['more']; else loadingSpinner">Load more</span>
+        
+            <ng-template #loadingSpinner>
+                <div class="loader"></div>
+            </ng-template>
+        </button>
+    </div>
+</div>
